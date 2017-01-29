@@ -23,7 +23,7 @@
      * Static - passed to ajax to check for new comments for current item
      * @type String
      */
-    var itemId = '<?= $item_id; ?>';
+    var itemId = "<?= $item_id; ?>";
 
     /**
      * This value will change. When user clicks
@@ -32,7 +32,7 @@
      * query seeks only comments after latestDate.
      * @type String
      */
-    var latestDate = '<?= $latest_date; ?>';
+    var latestDate = "<?= $latest_date; ?>";
 
 
     /**
