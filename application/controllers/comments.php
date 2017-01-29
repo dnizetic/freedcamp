@@ -27,7 +27,7 @@ class Comments extends MY_Controller {
 
         /**
          * Get date field from last row. With this date we'll check for newly added rows.
-         * If a row in DB has a greater add date than this, then we'll know
+         * If a row in DB has a greater date than this, then we'll know
          * it's a newly added row.
          */
         if (count($data['comments']) > 0) {
@@ -35,9 +35,8 @@ class Comments extends MY_Controller {
             $data['latest_date'] = $data['comments'][$last_row_index]->date;
         } else {
             /**
-             * Fallback gracefully. This will still make
-             * the functionalities work, even if there's no rows
-             * in the table.
+             * Fallback gracefully in order to make everything
+             * work properly even if there's no comments.
              */
             $data['latest_date'] = '0000-00-00';
         }
