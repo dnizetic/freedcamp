@@ -27,10 +27,6 @@
         <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>
-            if (!window.jQuery) {
-                document.write('<script src="<?php echo $this->template_path; ?>js/libs/jquery-2.1.1.min.js"><\/script>');
-            }
-
             var csrf_value = '<?php echo $this->security->get_csrf_hash(); ?>';
         </script>
     </head>
