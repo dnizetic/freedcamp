@@ -7,8 +7,8 @@ class Comments_model extends MY_Model {
 
     /**
      * Returns all comments entered after $latest_date.
-     * @param type $current_num
-     * @param type $item_id
+     * @param string $latest_date
+     * @param int $item_id
      * @return type
      */
     public function get_new_comments($latest_date, $item_id) {

@@ -23,7 +23,6 @@ class Ajax extends MY_Controller {
         $num_new = count($new_comments);
 
         if ($num_new > 0) {
-            //Assemble display message
             $this->json(1, null, $new_comments);
         } else {
             //No new comments
