@@ -3,21 +3,35 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Comments extends MY_Controller {
+class Ajax extends MY_Controller {
 
-   
-    public function show($item_id) {
-        
+    
+    /**
+     * Checks whether there are new comments in the table
+     * by checking if there is a comment with newer date
+     * than latest_date.
+     */
+    public function check_new_comments() {
+
         $this->load->model('comments_model');
-        
-        $data['comments'] = $this->comments_model->get_many_by(array(
-            'item_id' => $item_id
-        ));
-        
-        $this->load->view('comments/show', $data);
+
+        //Date of the latest comment user has on screen.
+        $latest_date = $this->input->post('latest_date', TRUE);
+        $item_id = $this->input->post('item_id', TRUE);
+
+        $new_comments = $this->comments_model->get_new_comments($latest_date, $item_id);
+        $num_new = count($new_comments);
+
+
+        if ($num_new > 0) {
+
+            //Assemble display message
+            $this->json(1, null, $new_comments);
+        } else {
+
+            //No new comments
+            $this->json(0, null);
+        }
     }
 
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
