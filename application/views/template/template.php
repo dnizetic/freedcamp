@@ -27,16 +27,16 @@
         <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>
-            var csrf_value = '<?php echo $this->security->get_csrf_hash(); ?>';
+            var csrf_value = '<?= $this->security->get_csrf_hash(); ?>';
         </script>
     </head>
 
     <body style='min-height: 2000px; margin: 20px'> <!-- Scroll fix. Without min height, won't scroll to last element if there's not  enough elements. -->
 
-        <?php echo $content; ?>
+        <?= $content; ?>
 
         <!-- Extra scripts loaded by templating engine. -->
-        <?php echo $_scripts; ?>
+        <?= $_scripts; ?>
     </body>
 
 </html>

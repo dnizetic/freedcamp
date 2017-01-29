@@ -1,4 +1,4 @@
-<h2>Comments for item: <?php echo $item_id; ?></h2>
+<h2>Comments for item: <?= $item_id; ?> </h2>
 
 <div class="new_message" style="display: none">
     There <span class="num_new_comments"></span> 
@@ -9,9 +9,9 @@
     <tbody>
         <?php foreach ($comments as $comment): ?>
             <tr>
-                <td class="tg-yw4l">#<?php echo $comment->commentid; ?></td>
-                <td class="tg-yw4l"><?php echo $comment->description; ?></td>
-                <td class="tg-yw4l"><?php echo $comment->date; ?></td>
+                <td class="tg-yw4l">#<?= $comment->commentid; ?></td>
+                <td class="tg-yw4l"><?= $comment->description; ?></td>
+                <td class="tg-yw4l"><?= $comment->date; ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
@@ -23,7 +23,7 @@
      * Static - passed to ajax to check for new comments for current item
      * @type String
      */
-    var itemId = '<?php echo $item_id; ?>';
+    var itemId = '<?= $item_id; ?>';
 
     /**
      * This value will change. When user clicks
@@ -32,7 +32,7 @@
      * query seeks only comments after latestDate.
      * @type String
      */
-    var latestDate = '<?php echo $latest_date; ?>';
+    var latestDate = '<?= $latest_date; ?>';
 
 
     /**
@@ -77,6 +77,10 @@
                     var newMessage = (response.data.length > 1 ? 'are ' : 'is ') + response.data.length + " new comment" + (response.data.length > 1 ? 's ' : '') + ". ";
                     $('.num_new_comments').text(newMessage);
 
+                    /**
+                     * Populate the queue with new rows, which will be
+                     * appended if user clicks the show rows link.
+                     */
                     queueAddRows = response.data;
                 }
             }
