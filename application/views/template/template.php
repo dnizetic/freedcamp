@@ -31,7 +31,7 @@
         </script>
     </head>
 
-    <body style='min-height: 2000px'> <!-- Scroll fix. Without min height, won't scroll to last element if there's not  enough elements. -->
+    <body style='min-height: 2000px; margin: 20px'> <!-- Scroll fix. Without min height, won't scroll to last element if there's not  enough elements. -->
 
         <?php echo $content; ?>
 
