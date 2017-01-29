@@ -1,5 +1,5 @@
 <div class="new_message" style="display: none">
-    There is/are <span class="num_new_comments"></span> new comment(s). 
+    There <span class="num_new_comments"></span> 
     Click [<a class="show_new_comments" href="#!">here</a>] to view.
 </div>
 
@@ -64,12 +64,18 @@
                 latest_date: latestDate,
                 item_id: itemId
             },
-            success: function (data) {
-                if (data.status == 1) {
+            success: function (response) {
+                if (response.status == 1) {
                     //New rows. Append to end of table.
                     $('.new_message').show();
+                    
+                    /**
+                     * Add number of comments added.
+                     */
+                    var newMessage = (response.data.length > 1 ? 'are ' : 'is ') + response.data.length + " new comment" + (response.data.length > 1 ? 's ' : '') + ". ";
+                    $('.num_new_comments').text(newMessage);
 
-                    queueAddRows = data.data;
+                    queueAddRows = response.data;
                 }
             }
         });
@@ -88,7 +94,7 @@
          * Iterate through rows in queue and append them to table.
          */
         $.each(queueAddRows, function (index, obj) {
-            var newRow = "<tr id='" + obj.commentid + "'><td>" + obj.commentid + "</td><td>" + obj.description + "</td><td>" + obj.date + "</td></tr>";
+            var newRow = "<tr id='" + obj.commentid + "'><td>#" + obj.commentid + "</td><td>" + obj.description + "</td><td>" + obj.date + "</td></tr>";
             $('#comments_table tbody').append(newRow);
 
             if (index == (total - 1)) {
@@ -107,7 +113,7 @@
          */
         var scrollId = queueAddRows[0].commentid;
         $('html, body').animate({
-            scrollTop: $("#" + scrollId).offset().top
+            scrollTop: $("#" + scrollId).offset().top - 25
         }, 1000);
 
 
