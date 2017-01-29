@@ -15,6 +15,14 @@ $template_path = $this->template_path;
         <!-- Basic Styles -->
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $template_path; ?>css/bootstrap.min.css">
 
+        <!-- Table styles. -->
+        <style type="text/css">
+            .tg  {border-collapse:collapse;border-spacing:0;}
+            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+            .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+            .tg .tg-yw4l{vertical-align:top}
+        </style>
+
         <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>
@@ -28,10 +36,9 @@ $template_path = $this->template_path;
 
     <body>
 
+        <?php echo $content; ?>
 
-        <!-- Custom scripts -->
-        <script src="/web/js/main.js"></script>
-
+        <!-- Extra scripts loaded by templating engine. -->
         <?php echo $_scripts; ?>
     </body>
 
