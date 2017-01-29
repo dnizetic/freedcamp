@@ -30,9 +30,10 @@ class Comments extends MY_Controller {
          * If a row in DB has a greater date than this, then we'll know
          * it's a newly added row.
          */
-        if (count($data['comments']) > 0) {
-            $last_row_index = count($data['comments']) - 1;
-            $data['latest_date'] = $data['comments'][$last_row_index]->date;
+        $comments = $data['comments'];
+        if (count($comments) > 0) {
+            $last_row_index = count($comments) - 1;
+            $data['latest_date'] = $comments[$last_row_index]->date;
         } else {
             /**
              * Fallback gracefully in order to make everything
