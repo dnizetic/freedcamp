@@ -1,3 +1,5 @@
+<h2>Comments for item: <?php echo $item_id; ?></h2>
+
 <div class="new_message" style="display: none">
     There <span class="num_new_comments"></span> 
     Click [<a class="show_new_comments" href="#!">here</a>] to view.
@@ -25,7 +27,7 @@
 
     /**
      * This value will change. When user clicks
-     * "Click here to view", this variable is
+     * "Click here to view", this variable is set
      * to latest comment's date so that polling
      * query seeks only comments after latestDate.
      * @type String
