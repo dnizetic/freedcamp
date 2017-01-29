@@ -22,13 +22,10 @@ class Ajax extends MY_Controller {
         $new_comments = $this->comments_model->get_new_comments($latest_date, $item_id);
         $num_new = count($new_comments);
 
-
         if ($num_new > 0) {
-
             //Assemble display message
             $this->json(1, null, $new_comments);
         } else {
-
             //No new comments
             $this->json(0, null);
         }
