@@ -17,6 +17,15 @@
     </tbody>
 </table>
 
+<br/> 
+
+<div class="users_typing"></div>
+<form>
+    <textarea cols="45" rows="10" placeholder="Type a comment" name='description' class="description"></textarea>
+    <br/>
+    
+</form>
+
 
 <script type="text/javascript">
     /**
@@ -41,6 +50,7 @@
      * @type Number
      */
     var pollingInterval = 5000; //Move this to config
+
 
     /**
      * Holds the new rows to be added to the end of the table. This array
@@ -70,7 +80,7 @@
                 if (response.status == 1) {
                     //New rows. Append to end of table.
                     $('.new_message').show();
-                    
+
                     /**
                      * Add number of comments added.
                      */
@@ -117,10 +127,12 @@
         /**
          * Scroll to the first added row.
          */
-        var scrollId = queueAddRows[0].commentid;
-        $('html, body').animate({
-            scrollTop: $("#" + scrollId).offset().top - 25
-        }, 1000);
+        if (total > 0) {
+            var scrollId = queueAddRows[0].commentid;
+            $('html, body').animate({
+                scrollTop: $("#" + scrollId).offset().top - 25
+            }, 1000);
+        }
 
 
         /**
@@ -134,5 +146,92 @@
         $('.new_message').hide();
     });
 
+
+
+    /**
+     * Query each 2s to check if other users are typing.
+     * @type Number
+     */
+    var checkUsersTypingInterval = 2000;
+
+    /**
+     * Once user starts typing, we create a row in users_typing.
+     * This can occur each 2 seconds.
+     * @type Number    
+     */
+    var doneTypingInterval = 2000;
+    var $input = $('.description');
+    var serverNotified = false;
+    var typingTimer;
+
+    $input.on('keyup', function () {
+
+        if (!serverNotified) {
+
+            /**
+             * Insert a row to notify other users
+             * of a typing user.
+             */
+            userIsTyping();
+
+            /**
+             * Make sure this cannot occure more than
+             * once in 'doneTypingInterval' seconds.
+             * @returns {undefined}
+             */
+            serverNotified = true;
+
+            setTimeout(function () {
+                serverNotified = false;
+            }, doneTypingInterval);
+        }
+
+    });
+
+
+
+    /**
+     * Long polling method for finding out whether
+     * there are users typing a new comment.
+     */
+    setInterval(function () {
+        $.ajax({
+            url: "../ajax/check_users_typing",
+            type: 'POST',
+            dataType: "json",
+            data: {
+                csrf_token: csrf_value,
+            },
+            success: function (response) {
+                if (response.data.length > 0) {
+                    var usersWriting = '';
+                    $.each(response.data, function (index, obj) {
+                        usersWriting += '<p>User (IP: ' + obj.ip + ') is currently writing!</p>';
+                    });
+                    $('.users_typing').html(usersWriting);
+                } else {
+                    $('.users_typing').html('');
+                }
+            }
+        });
+    }, checkUsersTypingInterval);
+
+
+    /**
+     * Insert a record in users_typing so that
+     * other users can be notified.
+     */
+    function userIsTyping()
+    {
+        $.ajax({
+            url: "../ajax/user_typing",
+            type: 'POST',
+            dataType: "json",
+            data: {
+                csrf_token: csrf_value,
+                typing: 1
+            },
+        });
+    }
 
 </script>

@@ -42,8 +42,6 @@ class Comments extends MY_Controller {
             $data['latest_date'] = '0000-00-00';
         }
 
-
-
         $this->call_template('comments/show', $data);
     }
 

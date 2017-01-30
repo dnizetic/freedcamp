@@ -226,7 +226,7 @@ class MY_Model extends CI_Model {
     /**
      * Updated a record based on the primary value.
      */
-    public function update_($primary_value, $data, $skip_validation = FALSE) {
+    public function update($primary_value, $data, $skip_validation = FALSE) {
         $data = $this->trigger('before_update', $data);
 
         if ($skip_validation === FALSE) {
@@ -306,7 +306,7 @@ class MY_Model extends CI_Model {
     /**
      * Delete a row from the table by the primary value
      */
-    public function delete_($id) {
+    public function delete($id) {
         $this->trigger('before_delete', $id);
 
         $this->_database->where($this->primary_key, $id);

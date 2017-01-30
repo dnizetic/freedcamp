@@ -5,7 +5,6 @@ if (!defined('BASEPATH'))
 
 class Ajax extends MY_Controller {
 
-    
     /**
      * Checks whether there are new comments in the table
      * by checking if there is a comment with newer date
@@ -28,6 +27,41 @@ class Ajax extends MY_Controller {
             //No new comments
             $this->json(0, null);
         }
+    }
+
+    
+    /**
+     * Checks if there's a row in users_typing
+     * that was created in the last 10 seconds.
+     * Fetches all such rows - they represent users
+     * that have started typing in the past 10 seconds.
+     */
+    public function check_users_typing() {
+        $this->load->model('users_typing_model');
+        $user_ip = $this->input->ip_address();
+        /**
+         * Check rows created in last 10 seconds.
+         */
+        $date_str = date('Y-m-d H:i:s', time() - 10);
+        $users_typing = $this->users_typing_model->get_many_by(array(
+            'ip !=' => $user_ip, //Dont match current user IP
+            'date > ' => $date_str //Last 10 seconds
+        ));
+        $this->json(1, null, $users_typing);
+    }
+
+    /*
+     * Insert a row into users_typing so that check_users_typing()
+     * can return appropriate rows.
+     */
+    public function user_typing() {
+        $this->load->model('users_typing_model');
+        $typing = $this->input->post('typing');
+        $user_ip = $this->input->ip_address();
+        $this->users_typing_model->insert(array(
+            'ip' => $user_ip,
+            'typing' => $typing,
+        ));
     }
 
 }
