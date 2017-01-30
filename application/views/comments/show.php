@@ -23,7 +23,7 @@
 <form>
     <textarea cols="45" rows="10" placeholder="Type a comment" name='description' class="description"></textarea>
     <br/>
-    
+    <button class="submit_comment">Submit</button>
 </form>
 
 
@@ -233,5 +233,21 @@
             },
         });
     }
+
+
+    $('.submit_comment').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "../ajax/insert_comment",
+            type: 'POST',
+            dataType: "json",
+            data: {
+                csrf_token: csrf_value,
+                description: $('.description').val(),
+                item_id: itemId
+            },
+        });
+    });
+
 
 </script>

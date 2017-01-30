@@ -63,5 +63,19 @@ class Ajax extends MY_Controller {
             'typing' => $typing,
         ));
     }
+    
+    
+    public function insert_comment() {
+        $this->load->model('comments_model');
+        $id = $this->comments_model->insert(array(
+            'description' => $this->input->post('description', TRUE),
+            'item_id' => $this->input->post('item_id', TRUE),
+        ));
+        if($id) {
+            $this->json(1, 'Success');
+        } else {
+            $this->json(0, 'Failure');
+        }
+    }
 
 }
