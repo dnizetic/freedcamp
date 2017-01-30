@@ -159,7 +159,7 @@
      * This can occur each 2 seconds.
      * @type Number    
      */
-    var doneTypingInterval = 2000;
+    var requestLimit = 2000;
     var $input = $('.description');
     var serverNotified = false;
     var typingTimer;
@@ -176,14 +176,14 @@
 
             /**
              * Make sure this cannot occure more than
-             * once in 'doneTypingInterval' seconds.
+             * once in 'requestLimit' seconds.
              * @returns {undefined}
              */
             serverNotified = true;
 
             setTimeout(function () {
                 serverNotified = false;
-            }, doneTypingInterval);
+            }, requestLimit);
         }
 
     });
